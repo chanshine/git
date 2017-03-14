@@ -1,0 +1,16 @@
+git 回滚的俩种方式
+    
+ git reset -- hard'commit id'
+    git reset命令意味着你会直接将HEAD指针移动到commit id所指定的提交上，它有以下特点
+    1.所有的提交不会改变，只是将HEAD指针切换到了一个指定的提交上
+    2.这时远程库上的提交历史不会改变
+    3.如果删除掉本地库再次clone代码，或者git pull， HEAD又会回到最新的提交上面
+    
+    git reset 'commit id'+ git push origin HEAD:branch -f:强制提交
+    1.这意味着会把commit id之后的所有修改都抛弃掉，当前的commit id所指的提交为最新的提交
+    2.从派生树上来看，整个提交历史会变短
+git revert 'commit id'
+    1.会退到commit id所指定提交的下一个提交，就是说会回滚到这个提交执行完成后的状态
+    2.创建新的提交，可能会涉及到冲突修改
+    3.revert所表示的回滚跟我们理解的回滚不一样
+    *revert好像不会删掉新增的修改，ex:一个分支创建下创建三个副本，提交后，无法再会退到未创建三个副本的版本，如果需要删除，还需要借助git reset命令
